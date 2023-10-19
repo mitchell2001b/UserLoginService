@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  user-login-microservice:
+    container_name: user-login-microservice-container
+    image: ghcr.io/mitchell2001b/userloginservice:main
+    ports:
+      - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:${MYSQLDB_LOCAL_PORT}/${MYSQLDB_DATABASE}
+    networks:
+      - semester6project_network
+    depends_on:
+      - login-db
+
+
+  login-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQLDB_DATABASE}
+    ports:
+      - "${MYSQLDB_DOCKER_PORT}:${MYSQLDB_LOCAL_PORT}"
+    networks:
+      - semester6project_network
+
+networks:
+  semester6project_network:
+    external: true
+    name: semester6project_network
