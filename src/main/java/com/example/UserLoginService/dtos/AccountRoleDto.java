@@ -1,11 +1,15 @@
 package com.example.UserLoginService.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class AccountRoleDto implements Serializable
 {
+    @JsonProperty("id")
     private int Id;
+    @JsonProperty("name")
     private String Name;
 
     public AccountRoleDto(int id, String name)

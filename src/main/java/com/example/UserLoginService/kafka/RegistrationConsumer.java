@@ -1,5 +1,7 @@
 package com.example.UserLoginService.kafka;
 
+import com.example.UserLoginService.Account.Account;
+import com.example.UserLoginService.Account.AccountService;
 import com.example.UserLoginService.Events.UserCreatedEvent;
 import com.example.UserLoginService.dtos.AccountLoginDto;
 import com.example.UserLoginService.dtos.AccountRoleDto;
@@ -24,9 +26,13 @@ public class RegistrationConsumer
     private DateTimeFormatter DateTimeFormatterEvent = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private ObjectMapper objectMapper;
 
+    private AccountService accountService;
+
     @Autowired
-    public RegistrationConsumer(ObjectMapper objectMapper) {
+    public RegistrationConsumer(ObjectMapper objectMapper, AccountService service)
+    {
         this.objectMapper = objectMapper;
+        this.accountService = service;
     }
 
     @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
@@ -54,7 +60,8 @@ public class RegistrationConsumer
             LocalDate createdAt = LocalDate.parse(createdAtString, DateTimeFormatterEvent);
             AccountRoleDto roleDto = new AccountRoleDto(roleId, roleName);
             AccountLoginDto loginDto = new AccountLoginDto(accountId, passWord, email, roleDto);
-
+            Account newAccount = new Account(passWord, email, roleId, roleName);
+            accountService.AddAccount(newAccount);
             LOGGER.info(String.format("User created event received in login service => %s", loginDto.toString()));
 
             // Process the extracted fields as needed
