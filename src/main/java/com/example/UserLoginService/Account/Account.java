@@ -6,33 +6,34 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "account")
+@NamedQuery(name = "Account.findByEmailAndPassword", query = "SELECT a FROM Account a WHERE a.email = :email AND a.password = :password")
 public class Account
 {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
 
-    private String Password;
+    private String password;
 
     @Column(unique=true)
-    private String Email;
+    private String email;
 
     private int roleId;
 
     private String roleName;
 
-    public Account(int id, String password, String email, int roleId, String roleName)
+    public Account(int idGiven, String passWord, String emailGiven, int roleId, String roleName)
     {
-        Id = id;
-        Password = password;
-        Email = email;
+        id = idGiven;
+        password = passWord;
+        email = emailGiven;
         this.roleId = roleId;
         this.roleName = roleName;
     }
-    public Account(String password, String email, int roleId, String roleName)
+    public Account(String passWord, String emailGiven, int roleId, String roleName)
     {
-        Password = password;
-        Email = email;
+        password = passWord;
+        email = emailGiven;
         this.roleId = roleId;
         this.roleName = roleName;
     }
@@ -43,17 +44,17 @@ public class Account
 
     public int getId()
     {
-        return Id;
+        return id;
     }
 
     public String getPassword()
     {
-        return Password;
+        return password;
     }
 
     public String getEmail()
     {
-        return Email;
+        return email;
     }
 
     public int getRoleId()
@@ -69,9 +70,9 @@ public class Account
     @Override
     public String toString() {
         return "Account{" +
-                "Id=" + Id +
-                ", Password='" + Password + '\'' +
-                ", Email='" + Email + '\'' +
+                "Id=" + id +
+                ", Password='" + password + '\'' +
+                ", Email='" + email + '\'' +
                 ", roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
                 '}';

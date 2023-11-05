@@ -11,7 +11,7 @@ public class AccountLoginDto implements Serializable
     private int Id;
 
     @JsonProperty("password")
-    private String PassWord;
+    private String Password;
     @JsonProperty("email")
     private String Email;
 
@@ -20,9 +20,20 @@ public class AccountLoginDto implements Serializable
 
     public AccountLoginDto(int id, String passWord, String email, AccountRoleDto roleDto) {
         Id = id;
-        PassWord = passWord;
+        Password = passWord;
         Email = email;
         RoleDto = roleDto;
+    }
+    public AccountLoginDto(int id, String email, AccountRoleDto roleDto) {
+        Id = id;
+        Email = email;
+        RoleDto = roleDto;
+    }
+
+    public AccountLoginDto(String email, String passWord)
+    {
+        Email = email;
+        Password = passWord;
     }
 
     public AccountLoginDto()
@@ -35,7 +46,7 @@ public class AccountLoginDto implements Serializable
     }
 
     public String getPassWord() {
-        return PassWord;
+        return Password;
     }
 
     public String getEmail() {
@@ -50,7 +61,7 @@ public class AccountLoginDto implements Serializable
     public String toString() {
         return "AccountLoginDto{" +
                 "Id=" + Id +
-                ", PassWord='" + PassWord + '\'' +
+                ", PassWord='" + Password + '\'' +
                 ", Email='" + Email + '\'' +
                 ", RoleDto=" + RoleDto +
                 '}';
