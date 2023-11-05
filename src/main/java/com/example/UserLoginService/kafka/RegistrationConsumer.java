@@ -43,8 +43,6 @@ public class RegistrationConsumer
 
             Map<String, Object> eventMap = objectMapper.readValue(jsonEvent, new TypeReference<Map<String, Object>>() {});
 
-            // Extract specific fields like "email" and "passWord" from the map
-
             int accountId = (Integer) eventMap.get("id");
 
 
@@ -64,9 +62,8 @@ public class RegistrationConsumer
             accountService.AddAccount(newAccount);
             LOGGER.info(String.format("User created event received in login service => %s", loginDto.toString()));
 
-            // Process the extracted fields as needed
         } catch (JsonProcessingException e) {
-            // Handle JSON deserialization exception
+
             LOGGER.error("Error deserializing JSON message", e);
         }
     }

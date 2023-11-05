@@ -1,8 +1,12 @@
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\configuration\CORSConfiguration.java
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\Events\UserCreatedEvent.java
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\Account\AccountService.java
+D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\repositories\AccountCustomRepository.java
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\kafka\RegistrationConsumer.java
+D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\repositories\IAccountRepository.java
+D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\Account\Account.java
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\dtos\AccountRoleDto.java
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\UserLoginServiceApplication.java
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\dtos\AccountLoginDto.java
+D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\repositories\IAccountCustomRepository.java
 D:\projecten\semester6individueel\UserLoginService\src\main\java\com\example\UserLoginService\Account\AccountController.java

@@ -70,6 +70,7 @@ public class AccountController
             tokens.put("refresh_token", refreshToken);
 
             return ResponseEntity.status(HttpStatus.CREATED)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(tokens);
 
 
@@ -77,6 +78,7 @@ public class AccountController
         else
         {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(Collections.singletonMap("error", "Wrong email or password"));
         }
 
