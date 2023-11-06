@@ -77,7 +77,7 @@ public class AccountController
         }
         else
         {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            return ResponseEntity.status(HttpStatus.OK)
                     .header("Access-Control-Allow-Origin", "*")
                     .body(Collections.singletonMap("error", "Wrong email or password"));
         }
