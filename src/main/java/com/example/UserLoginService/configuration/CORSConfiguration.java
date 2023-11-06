@@ -25,4 +25,6 @@ public class CORSConfiguration
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
+    
 }
