@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class AccountLoginDto implements Serializable
 {
     @JsonProperty("id")
-    private int Id;
+    private Long Id;
 
     @JsonProperty("password")
     private String Password;
@@ -18,13 +18,13 @@ public class AccountLoginDto implements Serializable
     @JsonProperty("role")
     private AccountRoleDto RoleDto;
 
-    public AccountLoginDto(int id, String passWord, String email, AccountRoleDto roleDto) {
+    public AccountLoginDto(Long id, String passWord, String email, AccountRoleDto roleDto) {
         Id = id;
         Password = passWord;
         Email = email;
         RoleDto = roleDto;
     }
-    public AccountLoginDto(int id, String email, AccountRoleDto roleDto) {
+    public AccountLoginDto(Long id, String email, AccountRoleDto roleDto) {
         Id = id;
         Email = email;
         RoleDto = roleDto;
@@ -41,7 +41,7 @@ public class AccountLoginDto implements Serializable
 
     }
 
-    public int getId() {
+    public Long getId() {
         return Id;
     }
 

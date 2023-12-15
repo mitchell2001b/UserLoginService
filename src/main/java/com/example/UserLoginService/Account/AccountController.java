@@ -1,5 +1,6 @@
 package com.example.UserLoginService.Account;
 
+import com.example.UserLoginService.AzureServices.KeyVaultService;
 import com.example.UserLoginService.dtos.AccountLoginDto;
 import com.example.UserLoginService.kafka.RegistrationConsumer;
 import io.jsonwebtoken.security.Keys;
@@ -26,14 +27,28 @@ public class AccountController
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationConsumer.class);
     AccountService accountService;
+    KeyVaultService keyVaultService;
 
-    private final String secretKey = "SecretKeyFORMYAPPLICATIONSecretKeyFORMYAPPLICATION";
+
     @Autowired
-    public AccountController(AccountService service)
+    public AccountController(AccountService service, KeyVaultService keyService)
     {
         this.accountService = service;
+        this.keyVaultService = keyService;
     }
+
+
+    private String secretKey;
     //a
+
+    @GetMapping(value = "/lop")
+    public String testr()
+    {
+        secretKey = keyVaultService.getSecretValue("semester6key");
+
+        LOGGER.info("Secret Key from Azure Key Vault: " + secretKey);
+        return "hello world";
+    }
     @PostMapping(value = "/login")
     public ResponseEntity<Map<String, String>> Login(@RequestBody AccountLoginDto loginData)
     {

@@ -43,14 +43,16 @@ public class RegistrationConsumer
 
             Map<String, Object> eventMap = objectMapper.readValue(jsonEvent, new TypeReference<Map<String, Object>>() {});
 
-            int accountId = (Integer) eventMap.get("id");
+            Number accountIdNumber = (Number) eventMap.get("id");
+            Long accountId = accountIdNumber.longValue();
 
 
             String email = (String) eventMap.get("email");
             String passWord = (String) eventMap.get("passWord");
 
+            Number roleIdNumber = (Number) eventMap.get("roleId");
 
-            int roleId = (Integer) eventMap.get("roleId");
+            Long roleId = roleIdNumber.longValue();
 
             String roleName = (String) eventMap.get("roleName");
 

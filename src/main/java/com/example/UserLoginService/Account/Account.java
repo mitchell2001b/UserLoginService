@@ -11,18 +11,18 @@ public class Account
 {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String password;
 
     @Column(unique=true)
     private String email;
 
-    private int roleId;
+    private Long roleId;
 
     private String roleName;
 
-    public Account(int idGiven, String passWord, String emailGiven, int roleId, String roleName)
+    public Account(Long idGiven, String passWord, String emailGiven, Long roleId, String roleName)
     {
         id = idGiven;
         password = passWord;
@@ -30,7 +30,7 @@ public class Account
         this.roleId = roleId;
         this.roleName = roleName;
     }
-    public Account(String passWord, String emailGiven, int roleId, String roleName)
+    public Account(String passWord, String emailGiven, Long roleId, String roleName)
     {
         password = passWord;
         email = emailGiven;
@@ -42,7 +42,7 @@ public class Account
 
     }
 
-    public int getId()
+    public Long getId()
     {
         return id;
     }
@@ -57,7 +57,7 @@ public class Account
         return email;
     }
 
-    public int getRoleId()
+    public Long getRoleId()
     {
         return roleId;
     }

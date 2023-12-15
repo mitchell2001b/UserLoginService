@@ -8,11 +8,11 @@ import java.util.Objects;
 public class AccountRoleDto implements Serializable
 {
     @JsonProperty("id")
-    private int Id;
+    private Long Id;
     @JsonProperty("name")
     private String Name;
 
-    public AccountRoleDto(int id, String name)
+    public AccountRoleDto(Long id, String name)
     {
         Id = id;
         Name = name;
@@ -27,7 +27,7 @@ public class AccountRoleDto implements Serializable
 
     }
 
-    public int getId() {
+    public Long getId() {
         return Id;
     }
 
