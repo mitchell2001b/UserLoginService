@@ -5,6 +5,7 @@ import com.example.UserLoginService.dtos.AccountRoleDto;
 import com.example.UserLoginService.kafka.RegistrationConsumer;
 import com.example.UserLoginService.repositories.AccountCustomRepository;
 import com.example.UserLoginService.repositories.IAccountRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,19 @@ public class AccountService
     }
 
 
+    @Transactional
+    public void DeleteAccount(Account accountToDelete)
+    {
+        if(accountToDelete != null)
+        {
+            repoAccount.delete(accountToDelete);
+        }
+    }
+
+    public Account SelectAccount(long id, String email)
+    {
+        return repoAccount.FindAccount(id, email);
+    }
 
 
     public AccountLoginDto Login(String password, String email)

@@ -1,5 +1,6 @@
 package com.example.UserLoginService.kafka;
 
+import com.example.UserLoginService.Account.Account;
 import com.example.UserLoginService.Account.AccountService;
 import com.example.UserLoginService.dtos.AccountLoginDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class RegistrationDeleteConsumer
@@ -48,9 +50,15 @@ public class RegistrationDeleteConsumer
             LocalDateTime createdAt = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME);
             Date createdDate = java.util.Date.from(createdAt.atZone(java.time.ZoneId.systemDefault()).toInstant());
             LOGGER.info(date);
-
             AccountLoginDto dto = new AccountLoginDto(accountId, "", email, null);
+
             LOGGER.info(String.format("User deleted event received in login service => %s", dto.toString()));
+            Account accountToDelete = accountService.SelectAccount(accountId, email);
+            if(accountToDelete != null)
+            {
+                accountService.DeleteAccount(accountToDelete);
+            }
+
 
         }catch (JsonProcessingException e) {
 

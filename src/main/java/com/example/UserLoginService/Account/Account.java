@@ -3,6 +3,7 @@ package com.example.UserLoginService.Account;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "account")
@@ -10,12 +11,13 @@ import java.time.LocalDate;
 public class Account
 {
     @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
+    @Column(nullable = false, length = 40)
     private String password;
 
-    @Column(unique=true)
+    @Column(unique=true, nullable = false, length = 20)
     private String email;
 
     private Long roleId;
@@ -24,19 +26,21 @@ public class Account
 
     public Account(Long idGiven, String passWord, String emailGiven, Long roleId, String roleName)
     {
-        id = idGiven;
-        password = passWord;
-        email = emailGiven;
+        this.id = idGiven;
+        this.password = passWord;
+        this.email = emailGiven;
         this.roleId = roleId;
         this.roleName = roleName;
     }
     public Account(String passWord, String emailGiven, Long roleId, String roleName)
     {
-        password = passWord;
-        email = emailGiven;
+        this.password = passWord;
+        this.email = emailGiven;
         this.roleId = roleId;
         this.roleName = roleName;
     }
+
+
     public Account()
     {
 
