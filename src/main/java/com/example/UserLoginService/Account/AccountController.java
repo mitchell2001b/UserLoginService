@@ -37,9 +37,7 @@ public class AccountController
         this.keyVaultService = keyService;
     }
 
-
     private String secretKey;
-    //a
 
     @GetMapping(value = "/lop")
     public String testr()
@@ -52,10 +50,9 @@ public class AccountController
     @PostMapping(value = "/login")
     public ResponseEntity<Map<String, String>> Login(@RequestBody AccountLoginDto loginData)
     {
-        //LOGGER.info("ggggg" + loginData.getEmail() + " : " + loginData.getPassWord());
-        //LOGGER.info(String.format(loginData.toString()));
+
         AccountLoginDto dto = accountService.Login(loginData.getPassWord(), loginData.getEmail());
-        //LOGGER.info(dto.toString());
+
         if(dto != null)
         {
             Instant expirationDate = Instant.now().plusSeconds(3600); // Expires 1 hour from now
@@ -78,7 +75,6 @@ public class AccountController
                     .signWith(signingKey)
                     .compact();
 
-            // You can store the refresh token securely on the client (e.g., in a cookie)
 
             Map<String, String> tokens = new HashMap<>();
             tokens.put("access_token", jwt);
@@ -92,7 +88,7 @@ public class AccountController
         }
         else
         {
-            return ResponseEntity.status(HttpStatus.OK)
+            return ResponseEntity.status(HttpStatus.CONFLICT)
                     .header("Access-Control-Allow-Origin", "*")
                     .body(Collections.singletonMap("error", "Wrong email or password"));
         }

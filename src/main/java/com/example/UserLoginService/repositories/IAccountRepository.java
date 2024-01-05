@@ -17,4 +17,6 @@ public interface IAccountRepository extends JpaRepository<Account, Integer>
 
     @Query(value = "SELECT * FROM `account` WHERE id = ?1 AND email = ?2", nativeQuery = true)
     public Account FindAccount(long id, String email);
+    @Query(value = "SELECT * FROM `account` WHERE email = ?1", nativeQuery = true)
+    public Account FindAccount(String email);
 }

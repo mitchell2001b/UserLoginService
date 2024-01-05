@@ -14,7 +14,7 @@ public class Account
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false, length = 250)
     private String password;
 
     @Column(unique=true, nullable = false, length = 20)

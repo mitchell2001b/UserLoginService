@@ -1,5 +1,6 @@
 package com.example.UserLoginService.Account;
 
+import com.example.UserLoginService.HashFunctions.PasswordVerifier;
 import com.example.UserLoginService.dtos.AccountLoginDto;
 import com.example.UserLoginService.dtos.AccountRoleDto;
 import com.example.UserLoginService.kafka.RegistrationConsumer;
@@ -51,16 +52,28 @@ public class AccountService
 
     public AccountLoginDto Login(String password, String email)
     {
-
         LOGGER.info(password + " : " + email);
-        Account account = repoAccount.loginAccount(email, password);
+
+        Account account =  repoAccount.FindAccount(email);
+
+        //repoAccount.loginAccount(email, password);
         if(account == null)
         {
             return null;
         }
         else
         {
-            return new AccountLoginDto(account.getId(), account.getEmail(), new AccountRoleDto(account.getRoleId(), account.getRoleName()));
+            String hashedPassword = account.getPassword();
+            PasswordVerifier verifier = new PasswordVerifier();
+            if(verifier.VerifyPassword(password, hashedPassword))
+            {
+                return new AccountLoginDto(account.getId(), account.getEmail(), new AccountRoleDto(account.getRoleId(), account.getRoleName()));
+            }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }
