@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 @Configuration
 public class KeyVaultConfig {
 
@@ -19,16 +22,20 @@ public class KeyVaultConfig {
                 .buildClient();
     }*/
     @Value("${azure.keyvault.client-id}")
-    private String clientId;
+    private String base64ClientId;
 
     @Value("${azure.keyvault.client-secret}")
-    private String clientSecret;
+    private String base64ClientSecret;
 
     @Value("${azure.keyvault.tenant-id}")
-    private String tenantId;
+    private String base64TenantId;
 
     @Bean
     public SecretClient secretClient() {
+        String clientId = decodeBase64(base64ClientId);
+        String clientSecret = decodeBase64(base64ClientSecret);
+        String tenantId = decodeBase64(base64TenantId);
+
         return new SecretClientBuilder()
                 .vaultUrl("https://semeter6kluis.vault.azure.net/")
                 .credential(new ClientSecretCredentialBuilder()
@@ -37,5 +44,11 @@ public class KeyVaultConfig {
                         .tenantId(tenantId)
                         .build())
                 .buildClient();
+    }
+
+    private String decodeBase64(String base64Value)
+    {
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Value);
+        return new String(decodedBytes, StandardCharsets.UTF_8);
     }
 }
