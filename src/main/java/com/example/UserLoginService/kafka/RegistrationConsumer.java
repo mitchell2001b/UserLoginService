@@ -60,7 +60,7 @@ public class RegistrationConsumer
             LocalDate createdAt = LocalDate.parse(createdAtString, DateTimeFormatterEvent);
             AccountRoleDto roleDto = new AccountRoleDto(roleId, roleName);
             AccountLoginDto loginDto = new AccountLoginDto(accountId, passWord, email, roleDto);
-            Account newAccount = new Account(passWord, email, roleId, roleName);
+            Account newAccount = new Account(accountId, passWord, email, roleId, roleName);
             accountService.AddAccount(newAccount);
             LOGGER.info(String.format("User created event received in login service => %s", loginDto.toString()));
 
