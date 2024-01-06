@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: loginservice
+spec:
+  selector:
+    app: loginservice
+  ports:
+    - protocol: TCP
+      port: 8282
+      targetPort: 8282

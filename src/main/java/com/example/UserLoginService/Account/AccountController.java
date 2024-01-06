@@ -51,6 +51,10 @@ public class AccountController
     public ResponseEntity<Map<String, String>> Login(@RequestBody AccountLoginDto loginData)
     {
 
+        secretKey = keyVaultService.getSecretValue("semester6key");
+
+        LOGGER.info("Secret Key from Azure Key Vault: " + secretKey);
+
         AccountLoginDto dto = accountService.Login(loginData.getPassWord(), loginData.getEmail());
 
         if(dto != null)

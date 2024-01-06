@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loginservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loginservice
+  template:
+    metadata:
+      labels:
+        app: loginservice
+    spec:
+      containers:
+        - name: loginservice
+          image: ghcr.io/mitchell2001b/userloginservice:main
+          ports:
+            - containerPort: 8282
+          envFrom:
+            - configMapRef:
+                name: login-db-config
+          resources:
+            requests:
+              cpu: "50m"
+            limits:
+              cpu: "100m"
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: ghcr-secret
