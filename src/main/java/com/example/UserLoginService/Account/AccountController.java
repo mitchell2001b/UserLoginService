@@ -50,18 +50,24 @@ public class AccountController
     @PostMapping(value = "/login")
     public ResponseEntity<Map<String, String>> Login(@RequestBody AccountLoginDto loginData)
     {
-
         secretKey = keyVaultService.getSecretValue("semester6key");
 
         LOGGER.info("Secret Key from Azure Key Vault: " + secretKey);
-
-        AccountLoginDto dto = accountService.Login(loginData.getPassWord(), loginData.getEmail());
-
+        AccountLoginDto dto = null;
+        try
+        {
+            dto = accountService.Login(loginData.getPassWord(), loginData.getEmail());
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .header("Access-Control-Allow-Origin", "*")
+                    .body(Collections.singletonMap("error", "Wrong email or password"));
+        }
         if(dto != null)
         {
             Instant expirationDate = Instant.now().plusSeconds(3600); // Expires 1 hour from now
             Instant refreshTokenExpirationDate = Instant.now().plusSeconds(7 * 24 * 60 * 60); // Expires in 7 days
-
 
             SecretKey signingKey = Keys.hmacShaKeyFor(secretKey.getBytes());
 
@@ -83,7 +89,6 @@ public class AccountController
                     .signWith(signingKey)
                     .compact();
 
-
             Map<String, String> tokens = new HashMap<>();
             tokens.put("access_token", jwt);
             tokens.put("refresh_token", refreshToken);
@@ -91,8 +96,6 @@ public class AccountController
             return ResponseEntity.status(HttpStatus.CREATED)
                     .header("Access-Control-Allow-Origin", "*")
                     .body(tokens);
-
-
         }
         else
         {
@@ -113,7 +116,8 @@ public class AccountController
                 secretKey = keyVaultService.getSecretValue("semester6key");
 
                 SecretKey signingKey = Keys.hmacShaKeyFor(secretKey.getBytes());
-                Jws<Claims> jws = Jwts.parser().setSigningKey(signingKey).build().parseClaimsJws(refreshToken);
+                Jws<Claims> jws = Jwts.parser().verifyWith(signingKey).build().parseSignedClaims(refreshToken);
+
                 Claims claims = jws.getBody();
 
                 Instant expirationDate = Instant.now().plusSeconds(3600); // Expires 1 hour from now
